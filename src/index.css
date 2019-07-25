@@ -1,0 +1,37 @@
+/* 
+  全局样式：
+*/
+
+html,
+body {
+  color: #333;
+  background-color: #fff;
+  font-family: "Microsoft YaHei";
+}
+html,
+body,
+#root,
+.app {
+  height: 100%;
+}
+
+* {
+  box-sizing: border-box;
+
+  /* 参考链接：https://www.jianshu.com/p/04bf173826aa */
+  /* 解决移动端滑动事件优化问题的，在当前项目中，解决 轮播图组件 手动滑动时，报错的问题 */
+  touch-action: pan-y;
+}
+
+p,
+h3,
+ul {
+  margin: 0;
+}
+a {
+  color: #333;
+}
+
+ul {
+  list-style: none;
+}

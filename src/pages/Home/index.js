@@ -28,6 +28,22 @@ class Home extends Component {
         selectedTab: this.props.location.pathname
     };
 
+    componentDidUpdate(prevProps, prevState) {
+
+        const pathName = this.props.location.pathname
+        const prevPathName = prevProps.location.pathname
+
+        // 当前路由路径和上一次的路径不一致，则修改当前的选中状态
+        // 用于解决首页中点击中间菜单导致无法高亮问题
+        if (pathName !== prevPathName) {
+            this.setState(() => {
+                return {
+                    selectedTab: this.props.location.pathname
+                }
+            })
+        }
+    }
+
     renderTabBarItems = () => {
         return (
             TABBARLIST.map(val => (
@@ -41,9 +57,10 @@ class Home extends Component {
                         // 点击tabbar的时候跳转路由，并且修改选中的tabbar
                         this.props.history.push(val.path)
                         // 因为切换tabbar触发的是 更新阶段 ，所以这里必须使用setState再修改一下值
-                        this.setState({
-                            selectedTab: val.path,
-                        });
+                        // this.setState({
+                        //     selectedTab: val.path,
+                        // });
+                        // 修改为在更新阶段钩子函数中修改
                     }}
                 >
                 </TabBar.Item>

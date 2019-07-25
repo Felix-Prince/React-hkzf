@@ -1,3 +1,130 @@
-.swiper{
-    height:212px;
+.swiper {
+  height: 212px;
+  position: relative;
+  .search-box {
+    position: absolute;
+    width: 100%;
+    top: 25px;
+    z-index: 1;
+    padding: 0 10px;
+
+    .search-left {
+      flex: 1;
+      height: 34px;
+      margin: 0 10px;
+      padding: 5px 5px 5px 8px;
+      background-color: #fff;
+      border-radius: 3px;
+      .location {
+        font-size: 14px;
+        .icon-arrow {
+          font-size: 12px;
+        }
+      }
+      .search {
+        border-left: 1px solid #e5e5e5;
+        margin-left: 12px;
+        .icon-seach {
+          font-size: 15px;
+          padding: 0 2px 0 12px;
+        }
+        span {
+          padding-left: 4px;
+          font-size: 13px;
+          color: #9c9fa1;
+        }
+      }
+    }
+
+    .icon-map {
+      font-size: 25px;
+      color: #fff;
+    }
+  }
+}
+.navMenu {
+  padding: 10px 0;
+  background-color: #fff;
+  .am-flexbox-item {
+    text-align: center;
+  }
+  img {
+    width: 48px;
+  }
+  p {
+    margin-top: 7px;
+    font-size: 13px;
+  }
+}
+
+.groups {
+  padding: 0 10px;
+  background-color: #f6f5f6;
+  overflow: hidden;
+  &-title {
+    margin: 15px 0 15px 10px;
+    h3 {
+      font-size: 15px;
+    }
+    span {
+      color: #787d82;
+    }
+  }
+
+  .am-grid .am-flexbox {
+    background-color: transparent;
+    & .am-grid-item:first-child {
+      margin-right: 10px;
+    }
+  }
+  .am-grid-item {
+    height: 85px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    p {
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    span {
+      color: #999;
+      font-size: 12px;
+    }
+    img {
+      width: 55px;
+    }
+  }
+
+  .am-grid .am-flexbox .am-flexbox-item .am-grid-item-content {
+    padding: 10px 0;
+  }
+}
+
+.news {
+  padding: 10px;
+  background-color: #fff;
+  > h3 {
+    font-size: 15px;
+    margin: 10px 0 5px 10px;
+  }
+
+  &-item {
+    padding: 15px 10px 15px 0;
+    border-bottom: 1px solid #e5e5e5;
+    img {
+      height: 90px;
+      width: 120px;
+    }
+  }
+  .item-desc {
+    height: 90px;
+    padding-left: 12px;
+    h3 {
+      font-size: 14px;
+    }
+  }
+  .item-time {
+    width: 100%;
+    color: #9c9fa1;
+  }
 }
