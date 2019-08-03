@@ -1,0 +1,43 @@
+.root {
+    height: 100%;
+}
+.topSearch {
+    height: 45px;
+    background-color: #f6f5f6;
+    padding: 0 10px;
+    :global {
+        .icon-back {
+            color: #999;
+        }
+    }
+}
+.listSearch {
+    position: relative;
+    top: 0;
+    padding-left: 0;
+    :global {
+        .am-flexbox {
+            height: 30px;
+        }
+
+        .icon-map {
+            color: #00ae66;
+        }
+    }
+}
+
+.loading {
+    height: 110px;
+    background-color: #f6f5f6;
+}
+
+.houseList {
+    position: absolute;
+    top: 85px;
+    width: 100%;
+}
+:global {
+    .ReactVirtualized__Grid {
+        margin-bottom: 50px;
+    }
+}

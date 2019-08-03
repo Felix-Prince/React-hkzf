@@ -1,13 +1,14 @@
 .home {
-  padding-bottom: 50px;
-  .tabbar {
-    position: fixed;
-    bottom: 0;
-    // left: 0;
-    height: 50px;
-    width: 100%;
-  }
-  .iconfont {
-    font-size: 20px;
-  }
+    height: 100%;
+    padding-bottom: 50px;
+    .tabbar {
+        position: fixed;
+        bottom: 0;
+        // left: 0;
+        height: 50px;
+        width: 100%;
+        .iconfont {
+            font-size: 20px;
+        }
+    }
 }

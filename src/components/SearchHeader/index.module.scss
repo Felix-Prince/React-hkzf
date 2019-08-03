@@ -1,0 +1,42 @@
+.root {
+    position: absolute;
+    width: 100%;
+    top: 25px;
+    z-index: 1;
+    padding: 0 10px;
+    :global {
+        .icon-map {
+            font-size: 25px;
+            color: #fff;
+        }
+    }
+}
+.searchLeft {
+    flex: 1;
+    height: 34px;
+    margin: 0 10px;
+    padding: 5px 5px 5px 8px;
+    background-color: #fff;
+    border-radius: 3px;
+}
+.location {
+    font-size: 14px;
+    .icon-arrow {
+        font-size: 12px;
+    }
+}
+.search {
+    border-left: 1px solid #e5e5e5;
+    margin-left: 12px;
+    :global {
+        .icon-seach {
+            font-size: 15px;
+            padding: 0 2px 0 12px;
+        }
+        span {
+            padding-left: 4px;
+            font-size: 13px;
+            color: #9c9fa1;
+        }
+    }
+}
