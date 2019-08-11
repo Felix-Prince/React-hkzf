@@ -191,7 +191,7 @@ class index extends Component {
                 */}
                     {!this.state.isSwiperLoading && (
                         <Carousel
-                            autoplay={false}
+                            autoplay={true}
                             infinite
                             autoplayInterval={1000}
                         >

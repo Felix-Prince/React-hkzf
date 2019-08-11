@@ -64,39 +64,6 @@ class Map extends Component {
 
                     // 渲染覆盖物
                     await this.renderOverlays(value);
-
-                    /* 
-                        const {
-                            data: { body: houseList }
-                        } = await axios.get("http://localhost:8080/area/map", {
-                            params: {
-                                id: value
-                            }
-                        });
-
-                        // 获取数据后，遍历数据生成覆盖物，显示在地图上
-                        houseList.forEach(item => {
-                            const { longitude, latitude } = item.coord;
-                            const point = new BMap.Point(longitude, latitude);
-                            const opts = {
-                                position: point, // 指定文本标注所在的地理位置
-                                offset: new BMap.Size(-35, -35) //设置文本偏移量
-                            };
-                            const label = new BMap.Label("", opts); // 创建文本标注对象
-                            // 区、镇覆盖物结构：
-                            label.setContent(`
-                                <div class="${styles.bubble}">
-                                <p class="${styles.name}">${item.label}</p>
-                                <p>${item.count}套</p>
-                                </div>
-                            `);
-                            label.setStyle(labelStyle);
-                            label.addEventListener("click", e => {
-                                console.log(item.value);
-                            });
-                            map.addOverlay(label);
-                        }); 
-                    */
                 }
             },
             label

@@ -1,21 +1,21 @@
-import React, { Component } from "react";
+import React, { Component } from "react"
 
-import { API, getCurrentCity } from "../../../../../utils";
+import { API, getCurrentCity } from "../../../../../utils"
 
-import FilterTitle from "../FilterTitle";
-import FilterPicker from "../FilterPicker";
-import FilterMore from "../FilterMore";
+import FilterTitle from "../FilterTitle"
+import FilterPicker from "../FilterPicker"
+import FilterMore from "../FilterMore"
 
-import { Spring } from "react-spring/renderprops";
+import { Spring } from "react-spring/renderprops"
 
-import styles from "./index.module.css";
+import styles from "./index.module.css"
 
 const titleSelectedStatus = {
     area: false,
     mode: false,
     price: false,
     more: false
-};
+}
 
 // 选中的筛选条件数据
 const selectedValues = {
@@ -23,7 +23,7 @@ const selectedValues = {
     mode: ["null"],
     price: ["null"],
     more: []
-};
+}
 
 export default class Filter extends Component {
     state = {
@@ -31,27 +31,27 @@ export default class Filter extends Component {
         openType: "",
         filtersData: {},
         selectedValues
-    };
+    }
 
     componentDidMount() {
         // 获取筛选条件数据
-        this.getFilterData();
+        this.getFilterData()
 
         // 在组件渲染完成时，获取到 body 对象
-        this.htmlBody = document.body;
+        this.htmlBody = document.body
     }
 
     async getFilterData() {
-        const { value } = await getCurrentCity();
+        const { value } = await getCurrentCity()
 
         let res = await API.get("/houses/condition", {
             params: {
                 id: value
             }
-        });
+        })
         this.setState({
             filtersData: res.data.body
-        });
+        })
     }
 
     /**
@@ -62,131 +62,131 @@ export default class Filter extends Component {
      * @param {Array} selectedVal 默认值
      */
     judgeHighLight(type, selectedVal) {
-        let isHighLight = false;
+        let isHighLight = false
         if (
             type === "area" &&
             (selectedVal.length === 3 || selectedVal[0] === "subway")
         ) {
-            isHighLight = true;
+            isHighLight = true
         } else if (type === "mode" && selectedVal[0] !== "null") {
-            isHighLight = true;
+            isHighLight = true
         } else if (type === "price" && selectedVal[0] !== "null") {
-            isHighLight = true;
+            isHighLight = true
         } else if (type === "more" && selectedVal.length > 0) {
-            isHighLight = true;
+            isHighLight = true
         } else {
-            isHighLight = false;
+            isHighLight = false
         }
 
-        return isHighLight;
+        return isHighLight
     }
 
     // 点击四个选项切换筛选条件
     toggleTitleSelect = type => {
         // 给 body 添加一个类名，让其超过部分隐藏,用于解决筛选框展开后还能滚动的问题
-        this.htmlBody.className = "hidden";
-        const { titleSelectedStatus, selectedValues } = this.state;
+        this.htmlBody.className = "hidden"
+        const { titleSelectedStatus, selectedValues } = this.state
         // 不要直接修改state中的数据，因此这里把数据拷贝一份
-        const newTitleSelected = { ...titleSelectedStatus };
+        const newTitleSelected = { ...titleSelectedStatus }
 
         Object.keys(titleSelectedStatus).forEach(key => {
-            const selectedVal = selectedValues[key];
+            const selectedVal = selectedValues[key]
             if (key === type) {
                 // 表示当前遍历的和点击的是同一个，则高亮
-                newTitleSelected[key] = true;
+                newTitleSelected[key] = true
             } else {
-                newTitleSelected[key] = this.judgeHighLight(key, selectedVal);
+                newTitleSelected[key] = this.judgeHighLight(key, selectedVal)
             }
-        });
+        })
         this.setState({
             titleSelectedStatus: newTitleSelected,
             openType: type
-        });
-    };
+        })
+    }
 
     // 点击取消按钮及遮罩时隐藏筛选界面
     onCancle = type => {
         // 取消body的类名
-        this.htmlBody.className = "";
+        this.htmlBody.className = ""
 
-        const newTitleSelected = { ...this.state.titleSelectedStatus };
-        const selectedVal = this.state.selectedValues[type];
+        const newTitleSelected = { ...this.state.titleSelectedStatus }
+        const selectedVal = this.state.selectedValues[type]
         // console.log(selectedValues[type]);
 
-        newTitleSelected[type] = this.judgeHighLight(type, selectedVal);
+        newTitleSelected[type] = this.judgeHighLight(type, selectedVal)
         this.setState({
             titleSelectedStatus: newTitleSelected,
             openType: ""
-        });
-    };
+        })
+    }
 
     // 点击确定按钮
     onSave = (type, value) => {
         // 因为pickView在点击确定后会销毁，因此不能用于存储选择后的筛选条件信息
-        const { titleSelectedStatus, selectedValues } = this.state;
+        const { titleSelectedStatus, selectedValues } = this.state
 
-        const newTitleSelected = { ...titleSelectedStatus };
+        const newTitleSelected = { ...titleSelectedStatus }
 
-        newTitleSelected[type] = this.judgeHighLight(type, value);
+        newTitleSelected[type] = this.judgeHighLight(type, value)
 
         // 筛选条件，处理后的
-        const filters = {};
+        const filters = {}
 
         // 全部的筛选条件，未经处理的
-        const newSelectedValues = { ...selectedValues, [type]: value };
+        const newSelectedValues = { ...selectedValues, [type]: value }
 
-        const area = newSelectedValues.area;
-        const areaKey = area[0]; // 是area 还是 subway
-        let areaValue;
+        const area = newSelectedValues.area
+        const areaKey = area[0] // 是area 还是 subway
+        let areaValue
         if (area.length === 2) {
-            areaValue = "null";
+            areaValue = "null"
         } else {
-            areaValue = area[2] === "null" ? area[1] : area[2];
+            areaValue = area[2] === "null" ? area[1] : area[2]
         }
-        filters[areaKey] = areaValue;
+        filters[areaKey] = areaValue
 
-        filters.rentType = newSelectedValues.mode[0];
-        filters.price = newSelectedValues.price[0];
-        filters.more = newSelectedValues.more.join(",");
+        filters.rentType = newSelectedValues.mode[0]
+        filters.price = newSelectedValues.price[0]
+        filters.more = newSelectedValues.more.join(",")
 
         // console.log(selectedValues, filters);
 
-        this.props.onFilter(filters);
+        this.props.onFilter(filters)
 
         this.setState({
             openType: "",
             titleSelectedStatus: newTitleSelected,
             selectedValues: newSelectedValues
-        });
-    };
+        })
+    }
 
     renderFilterPicker() {
         const {
             openType,
             filtersData: { area, subway, rentType, price },
             selectedValues
-        } = this.state;
-        if (openType === "more" || openType === "") return null;
+        } = this.state
+        if (openType === "more" || openType === "") return null
 
         // 根据不同筛选条件传递不同的数据源
-        let data;
+        let data
         // 设置pickView的列数
-        let cols = 1;
+        let cols = 1
         // 用于 PickView 第二次选择时有默认数据
-        let defaultValue = selectedValues[openType];
+        let defaultValue = selectedValues[openType]
         switch (openType) {
             case "area":
-                data = [area, subway];
-                cols = 3;
-                break;
+                data = [area, subway]
+                cols = 3
+                break
             case "mode":
-                data = rentType;
-                break;
+                data = rentType
+                break
             case "price":
-                data = price;
-                break;
+                data = price
+                break
             default:
-                break;
+                break
         }
 
         return (
@@ -199,7 +199,7 @@ export default class Filter extends Component {
                 onCancle={this.onCancle}
                 onSave={this.onSave}
             />
-        );
+        )
     }
 
     renderFilterMore() {
@@ -207,12 +207,12 @@ export default class Filter extends Component {
             openType,
             filtersData: { roomType, oriented, floor, characteristic },
             selectedValues
-        } = this.state;
-        if (openType !== "more") return null;
+        } = this.state
 
-        const data = { roomType, oriented, floor, characteristic };
+        // if (openType !== "more") return null
 
-        const defaultValue = selectedValues[openType];
+        const data = { roomType, oriented, floor, characteristic }
+        const defaultValue = selectedValues.more
 
         return (
             <FilterMore
@@ -222,13 +222,13 @@ export default class Filter extends Component {
                 type={openType}
                 defaultValue={defaultValue}
             />
-        );
+        )
     }
 
     renderMask() {
-        const { openType } = this.state;
+        const { openType } = this.state
 
-        const isHide = openType === "more" || openType === "";
+        const isHide = openType === "more" || openType === ""
 
         // if (openType === "more" || openType === "") return null;
 
@@ -236,17 +236,17 @@ export default class Filter extends Component {
             <Spring to={{ opacity: isHide ? 0 : 1 }}>
                 {props => {
                     // 使得遮罩层不会阻挡我们的操作
-                    if (props.opacity === 0) return null;
+                    if (props.opacity === 0) return null
                     return (
                         <div
                             style={props}
                             className={styles.mask}
                             onClick={() => this.onCancle(openType)}
                         />
-                    );
+                    )
                 }}
             </Spring>
-        );
+        )
     }
 
     render() {
@@ -278,6 +278,6 @@ export default class Filter extends Component {
                     {this.renderFilterMore()}
                 </div>
             </div>
-        );
+        )
     }
 }

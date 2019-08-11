@@ -47,3 +47,5 @@ export { getCurrentCity, getCity, setCity };
 
 export { API } from "./api";
 export { BASE_URL } from "./url";
+
+export { getToken, setToken, removeToken, isAuth } from "./token";
